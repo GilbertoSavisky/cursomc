@@ -1,17 +1,26 @@
 package com.example.demo.repositories;
 
-//Camada de acesso a dados (Repository ou DAO) referente a Categoria
+import java.util.List;
 
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.domain.Categoria;
 import com.example.demo.domain.Produto;
 
 @Repository 			// Acessa a tabela "Categoria", faz as consultas...
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{ 
 	
-						// JpaRepository é capaz de buscar nas tabela pelo obj e tipo do atributo identificador (id=integer)
-						// esse obj (CategoriaRepository) faz as cunsultas de buscar, deletar, salvar, atualizar da tabela (Categoria)
-
+	
+	@Transactional(readOnly=true)
+	//@Query("SELECT DISTINCT obj FROM Produto obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
+	//Page<Produto> search(@Param("nome") String nome,@Param("categorias") List<Categoria> categorias, Pageable pageRequest);
+	
+	Page<Produto> findDistinctByNomeContainingAndCategoriasIn(String nome, List<Categoria> categorias, Pageable pageRequest); // Spring Data, criando consulta automaticamente
+	
 }
