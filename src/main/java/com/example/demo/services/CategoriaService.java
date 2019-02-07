@@ -17,7 +17,7 @@ public class CategoriaService {
 						//O serviço acessa o obj de acesso a dados Repository ou DAO
 				
 	
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Categoria obj = repo.findOne(id); //Busca pelo id e retorna um obj categoria
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
@@ -28,6 +28,11 @@ public class CategoriaService {
 	
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
 		return repo.save(obj);
 	}
 }

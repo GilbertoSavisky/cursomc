@@ -23,10 +23,10 @@ public class PedidoResource {
 	private PedidoService service;  //Controlador Rest está acessando o Serviço
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET) 		// add um and point p/ o metodo ResponseEntity
-	public ResponseEntity<?> find(@PathVariable Integer id) {		// id vem da URL 
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {		// id vem da URL 
 		//  ResponseEntity é um tipo especial do Spring que já encapsula, armazena várias informações de uma respota HTTP para um serviço Rest
 		
-		Pedido obj = service.buscar(id); //
+		Pedido obj = service.find(id); //
 		return ResponseEntity.ok().body(obj);
 	}
 

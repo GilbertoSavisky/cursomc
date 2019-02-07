@@ -18,7 +18,7 @@ public class ClienteService {
 						//O serviço acessa o obj de acesso a dados Repository ou DAO
 				
 	
-	public Cliente buscar(Integer id) {
+	public Cliente find(Integer id) {
 		Cliente obj = repo.findOne(id); //Busca pelo id e retorna um obj cliente
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
