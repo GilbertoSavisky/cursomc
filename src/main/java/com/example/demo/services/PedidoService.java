@@ -5,16 +5,15 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.ItemPedido;
-import com.example.demo.domain.Pagamento;
 import com.example.demo.domain.PagamentoComBoleto;
 import com.example.demo.domain.Pedido;
 import com.example.demo.domain.enums.EstadoPagamento;
 import com.example.demo.repositories.ItemPedidoRepository;
 import com.example.demo.repositories.PagamentoRepository;
 import com.example.demo.repositories.PedidoRepository;
-import com.example.demo.repositories.ProdutoRepository;
 import com.example.demo.services.exceptions.ObjectNotFoundException;
 
 
@@ -29,7 +28,7 @@ public class PedidoService {
 	private PagamentoRepository pagtoRepository;
 	
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private ProdutoService produtoService;
 	
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
@@ -48,6 +47,8 @@ public class PedidoService {
 		return obj;
 	}
 
+	
+	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
@@ -61,7 +62,7 @@ public class PedidoService {
 		pagtoRepository.save(obj.getPagamento());
 		for(ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoRepository.findOne(ip.getProduto().getId()).getPreco());
+			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
 			ip.setPedido(obj);
 		}
 		
