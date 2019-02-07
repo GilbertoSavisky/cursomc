@@ -11,9 +11,11 @@ import com.example.demo.domain.ItemPedido;
 import com.example.demo.domain.PagamentoComBoleto;
 import com.example.demo.domain.Pedido;
 import com.example.demo.domain.enums.EstadoPagamento;
+import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.repositories.ItemPedidoRepository;
 import com.example.demo.repositories.PagamentoRepository;
 import com.example.demo.repositories.PedidoRepository;
+import com.example.demo.repositories.ProdutoRepository;
 import com.example.demo.services.exceptions.ObjectNotFoundException;
 
 
@@ -31,7 +33,13 @@ public class PedidoService {
 	private ProdutoService produtoService;
 	
 	@Autowired
+	private ProdutoRepository produtoRepository;
+	
+	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private ClienteRepository cliRepository;
 	
 	@Autowired 			//Dependencia Automaticamente instanciada pelo spring
 	private PedidoRepository repo;  //dependencia dentro da classe 
@@ -52,6 +60,7 @@ public class PedidoService {
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(cliRepository.findOne(obj.getCliente().getId()));
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		if (obj.getPagamento() instanceof PagamentoComBoleto) {
@@ -62,11 +71,13 @@ public class PedidoService {
 		pagtoRepository.save(obj.getPagamento());
 		for(ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		
 		itemPedidoRepository.save(obj.getItens());
+		System.out.println(obj);
 		return obj;
 	}
 }
