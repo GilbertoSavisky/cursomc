@@ -1,5 +1,6 @@
 package com.savisky.demo;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,22 @@ import com.savisky.demo.domain.Cidade;
 import com.savisky.demo.domain.Cliente;
 import com.savisky.demo.domain.Endereco;
 import com.savisky.demo.domain.Estado;
+import com.savisky.demo.domain.ItemPedido;
+import com.savisky.demo.domain.Pagamento;
+import com.savisky.demo.domain.PagamentoComBoleto;
+import com.savisky.demo.domain.PagamentoComCartao;
+import com.savisky.demo.domain.Pedido;
 import com.savisky.demo.domain.Produto;
-import com.savisky.demo.enums.TipoCliente;
+import com.savisky.demo.domain.enums.EstadoPagamento;
+import com.savisky.demo.domain.enums.TipoCliente;
 import com.savisky.demo.repositories.CategoriaRepository;
 import com.savisky.demo.repositories.CidadeRepository;
 import com.savisky.demo.repositories.ClienteRepository;
 import com.savisky.demo.repositories.EnderecoRepository;
 import com.savisky.demo.repositories.EstadoRepository;
+import com.savisky.demo.repositories.ItemPedidoRepository;
+import com.savisky.demo.repositories.PagamentoRepository;
+import com.savisky.demo.repositories.PedidoRepository;
 import com.savisky.demo.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +46,12 @@ public class CursomcApplication implements CommandLineRunner { // CommandLineRun
 	ClienteRepository clienteRepository;
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	@Autowired
+	PedidoRepository pedidoRepository;
+	@Autowired
+	PagamentoRepository pagamentoRepository;
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -45,6 +61,11 @@ public class CursomcApplication implements CommandLineRunner { // CommandLineRun
 	public void run(String... args) throws Exception {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
+		Categoria cat3 = new Categoria(null, "Cama, Mesa e Banho");
+		Categoria cat4 = new Categoria(null, "Elerônicos");
+		Categoria cat5 = new Categoria(null, "Jardinagem");
+		Categoria cat6 = new Categoria(null, "Decoração");
+		Categoria cat7 = new Categoria(null, "Perfumaria");
 		
 		Produto p1 = new Produto(null, "Computador", 2000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -59,7 +80,7 @@ public class CursomcApplication implements CommandLineRunner { // CommandLineRun
 		
 		
 		
-		categoriaRepository.save(Arrays.asList(cat1, cat2));
+		categoriaRepository.save(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.save(Arrays.asList(p1, p2, p3));
 		
 		Estado est1 = new Estado(null, "Minas Gerais");
@@ -86,6 +107,37 @@ public class CursomcApplication implements CommandLineRunner { // CommandLineRun
 		
 		clienteRepository.save(Arrays.asList(cli1));
 		enderecoRepository.save(Arrays.asList(e1, e2));
+		
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		
+		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		Pagamento pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pagto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.save(Arrays.asList(ped1, ped2));
+		pagamentoRepository.save(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, p1.getPreco());
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, p3.getPreco());
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, p2.getPreco());
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		
+		itemPedidoRepository.save(Arrays.asList(ip1, ip2, ip3));
+		
 	}
 }
 

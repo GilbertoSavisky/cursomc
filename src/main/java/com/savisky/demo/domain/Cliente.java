@@ -14,7 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.savisky.demo.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.savisky.demo.domain.enums.TipoCliente;
 
 @Entity
 public class Cliente implements Serializable {
@@ -34,6 +35,10 @@ public class Cliente implements Serializable {
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>(); // Set -> é um conjunto que não permite repetição 
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
 		
@@ -96,6 +101,22 @@ public class Cliente implements Serializable {
 		this.enderecos = endereco;
 	}
 
+	public Set<String> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(Set<String> telefones) {
+		this.telefones = telefones;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -121,13 +142,7 @@ public class Cliente implements Serializable {
 		return true;
 	}
 
-	public Set<String> getTelefones() {
-		return telefones;
-	}
-
-	public void setTelefones(Set<String> telefones) {
-		this.telefones = telefones;
-	}
+	
 	
 	
 

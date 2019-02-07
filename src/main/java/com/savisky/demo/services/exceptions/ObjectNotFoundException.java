@@ -1,4 +1,4 @@
-package com.savisky.demo.exceptions;
+package com.savisky.demo.services.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException{
 
