@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.Categoria;
@@ -35,23 +36,25 @@ import com.example.demo.repositories.ProdutoRepository;
 public class DBService {
 	
 	@Autowired
-	CategoriaRepository categoriaRepository; 
+	private CategoriaRepository categoriaRepository; 
 	@Autowired
-	ProdutoRepository produtoRepository; 
+	private ProdutoRepository produtoRepository; 
 	@Autowired
-	CidadeRepository cidadeRepository;
+	private CidadeRepository cidadeRepository;
 	@Autowired
-	EstadoRepository estadoRepository;
+	private EstadoRepository estadoRepository;
 	@Autowired
-	ClienteRepository clienteRepository;
+	private ClienteRepository clienteRepository;
 	@Autowired
-	EnderecoRepository enderecoRepository;
+	private EnderecoRepository enderecoRepository;
 	@Autowired
-	PedidoRepository pedidoRepository;
+	private PedidoRepository pedidoRepository;
 	@Autowired
-	PagamentoRepository pagamentoRepository;
+	private PagamentoRepository pagamentoRepository;
 	@Autowired
-	ItemPedidoRepository itemPedidoRepository;
+	private ItemPedidoRepository itemPedidoRepository;
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	
 	public void instantiateTestDatabase() throws ParseException {
@@ -116,7 +119,7 @@ public class DBService {
 		estadoRepository.save(Arrays.asList(est1,est2));
 		cidadeRepository.save(Arrays.asList(c1, c2, c3));
 		
-		Cliente cli1 = new Cliente(null, "Gilberto Savisky", "saviskydeveloper@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Gilberto Savisky", "saviskydeveloper@gmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838693"));
 		
 		Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, c1);
