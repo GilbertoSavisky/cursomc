@@ -1,4 +1,4 @@
-package com.savisky.demo.domain;
+package com.example.demo.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.example.demo.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.savisky.demo.domain.enums.TipoCliente;
 
 @Entity
 public class Cliente implements Serializable {

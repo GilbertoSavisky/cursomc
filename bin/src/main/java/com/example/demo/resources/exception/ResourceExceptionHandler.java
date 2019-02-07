@@ -1,4 +1,4 @@
-package com.savisky.demo.resources.exception;
+package com.example.demo.resources.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.savisky.demo.services.exceptions.ObjectNotFoundException;
+import com.example.demo.services.exceptions.ObjectNotFoundException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {

@@ -1,4 +1,4 @@
-package com.savisky.demo;
+package com.example.demo;
 
 import java.util.Arrays;
 
@@ -7,19 +7,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.savisky.demo.domain.Categoria;
-import com.savisky.demo.domain.Cidade;
-import com.savisky.demo.domain.Cliente;
-import com.savisky.demo.domain.Endereco;
-import com.savisky.demo.domain.Estado;
-import com.savisky.demo.domain.Produto;
-import com.savisky.demo.domain.enums.TipoCliente;
-import com.savisky.demo.repositories.CategoriaRepository;
-import com.savisky.demo.repositories.CidadeRepository;
-import com.savisky.demo.repositories.ClienteRepository;
-import com.savisky.demo.repositories.EnderecoRepository;
-import com.savisky.demo.repositories.EstadoRepository;
-import com.savisky.demo.repositories.ProdutoRepository;
+import com.example.demo.domain.Categoria;
+import com.example.demo.domain.Cidade;
+import com.example.demo.domain.Cliente;
+import com.example.demo.domain.Endereco;
+import com.example.demo.domain.Estado;
+import com.example.demo.domain.Produto;
+import com.example.demo.domain.enums.TipoCliente;
+import com.example.demo.repositories.CategoriaRepository;
+import com.example.demo.repositories.CidadeRepository;
+import com.example.demo.repositories.ClienteRepository;
+import com.example.demo.repositories.EnderecoRepository;
+import com.example.demo.repositories.EstadoRepository;
+import com.example.demo.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner { // CommandLineRunner permite implementar um metodo auxiliar 

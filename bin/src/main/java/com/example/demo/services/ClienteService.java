@@ -1,12 +1,12 @@
-package com.savisky.demo.services;
+package com.example.demo.services;
 		//Camada de serviço
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.savisky.demo.domain.Cliente;
-import com.savisky.demo.repositories.ClienteRepository;
-import com.savisky.demo.services.exceptions.ObjectNotFoundException;
+import com.example.demo.domain.Cliente;
+import com.example.demo.repositories.ClienteRepository;
+import com.example.demo.services.exceptions.ObjectNotFoundException;
 
 
 
