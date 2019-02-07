@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.savisky.demo.domain.Categoria;
+import com.savisky.demo.exceptions.ObjectNotFoundException;
 import com.savisky.demo.repositories.CategoriaRepository;
-import com.savisky.demo.services.exceptions.ObjectNotFoundException;
 
 
 
