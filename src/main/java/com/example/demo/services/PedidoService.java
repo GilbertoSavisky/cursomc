@@ -15,7 +15,6 @@ import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.repositories.ItemPedidoRepository;
 import com.example.demo.repositories.PagamentoRepository;
 import com.example.demo.repositories.PedidoRepository;
-import com.example.demo.repositories.ProdutoRepository;
 import com.example.demo.services.exceptions.ObjectNotFoundException;
 
 
@@ -33,13 +32,13 @@ public class PedidoService {
 	private ProdutoService produtoService;
 	
 	@Autowired
-	private ProdutoRepository produtoRepository;
-	
-	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
 	@Autowired
 	private ClienteRepository cliRepository;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Autowired 			//Dependencia Automaticamente instanciada pelo spring
 	private PedidoRepository repo;  //dependencia dentro da classe 
@@ -77,7 +76,7 @@ public class PedidoService {
 		}
 		
 		itemPedidoRepository.save(obj.getItens());
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 }
