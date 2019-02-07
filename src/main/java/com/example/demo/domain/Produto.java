@@ -27,7 +27,8 @@ public class Produto implements Serializable {
 	private String nome;
 	private Double preco;
 	
-	@ManyToMany //Realionamento de muitos para muitos
+	@JsonIgnore
+	@ManyToMany //Relacionamento de muitos para muitos
 	@JoinTable(name = "PRODUTO_CATEGORIA", // Nova table contendo os ID das 2 tabelas
 		joinColumns = @JoinColumn(name = "produto_id"), //chave estrangeira correspondendo esta tabela (Produto) 
 		inverseJoinColumns = @JoinColumn(name = "categoria_id"))//cahve estrangeira correspondendo a outra tabela (Categoria)
