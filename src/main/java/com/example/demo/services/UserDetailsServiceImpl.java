@@ -10,7 +10,6 @@ import com.example.demo.domain.Cliente;
 import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.security.UserSS;
 
-
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
