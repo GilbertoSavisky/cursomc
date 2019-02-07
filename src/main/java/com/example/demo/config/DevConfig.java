@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.example.demo.services.DBService;
+import com.example.demo.services.EmailService;
+import com.example.demo.services.SmtpEmailService;
 
 import java.text.ParseException;
 
@@ -32,4 +34,9 @@ public class DevConfig {
 		return true;
 	}
 
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
+	}
+	
 }
