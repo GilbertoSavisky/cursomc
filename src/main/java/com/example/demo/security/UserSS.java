@@ -1,5 +1,4 @@
 package com.example.demo.security;
-
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,8 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.example.demo.domain.enums.Perfil;
-
-
 
 public class UserSS implements UserDetails {
 	private static final long serialVersionUID = 1L;
@@ -68,5 +65,9 @@ public class UserSS implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+	
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 }
