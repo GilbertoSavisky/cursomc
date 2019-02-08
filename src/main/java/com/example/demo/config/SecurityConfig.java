@@ -23,6 +23,7 @@ import com.example.demo.security.JWTAuthenticationFilter;
 import com.example.demo.security.JWTAuthorizationFilter;
 import com.example.demo.security.JWTUtil;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -43,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**"
+			"/categorias/**",
+			"/estados/**"
 	};
 
 	private static final String[] PUBLIC_MATCHERS_POST = {
